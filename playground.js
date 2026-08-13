@@ -16,8 +16,14 @@
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 120);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+// Render at most ~2.3 megapixels: huge windows scale down slightly
+// instead of dropping frames on weaker graphics chips.
+function fitResolution() {
+  const scale = Math.min(1, Math.sqrt(2_300_000 / (innerWidth * innerHeight)));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2) * scale);
+  renderer.setSize(innerWidth, innerHeight);
+}
+fitResolution();
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -31,7 +37,7 @@ scene.add(new THREE.HemisphereLight(0xcfe0ef, 0x51702f, 0.5));
 const sun = new THREE.DirectionalLight(0xffe4b0, 1.35);
 sun.position.set(9, 14, 6);
 sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.mapSize.set(1024, 1024);
 sun.shadow.camera.left = sun.shadow.camera.bottom = -24;
 sun.shadow.camera.right = sun.shadow.camera.top = 24;
 scene.add(sun);
@@ -265,7 +271,7 @@ addEventListener("keyup", (e) => keys.delete(e.key.toLowerCase()));
 addEventListener("resize", () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
+  fitResolution();
 });
 
 // ── The loop: runs ~60 times a second, forever ──
