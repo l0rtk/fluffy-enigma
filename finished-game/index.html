@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fluffy Acres</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="masthead">
+    <h1>Fluffy Acres</h1>
+    <p class="tagline">a farmer's daybook &middot; one season, thirty days</p>
+  </header>
+
+  <main>
+    <section class="field-wrap">
+      <div class="report">
+        <div class="report-item">Day <b id="day" class="num">1</b> <span class="of">/ 30</span></div>
+        <div class="report-item" id="weather">☀️ Sunny</div>
+        <div class="report-item">🪙 <b id="gold" class="num">20</b>g</div>
+        <div class="report-item energy" id="energy" title="Energy — every action costs 1"></div>
+      </div>
+      <div id="board" class="board"></div>
+      <p class="field-note" id="field-note"></p>
+    </section>
+
+    <aside class="panel">
+      <h2>Tools</h2>
+      <div class="tools" id="tools"></div>
+      <h2>Seeds</h2>
+      <div class="seeds" id="seeds"></div>
+      <button id="end-day" class="end-day">🌙 End day</button>
+      <h2>Daybook</h2>
+      <ul id="log" class="log"></ul>
+      <button id="new-game" class="new-game">Start a new season</button>
+    </aside>
+  </main>
+
+  <div id="gameover" class="gameover hidden">
+    <div class="gameover-card">
+      <h2>The season is over</h2>
+      <p class="final">🪙 <b id="final-gold" class="num">0</b> gold</p>
+      <p class="final-note">Can you beat it next season?</p>
+      <button id="play-again" class="end-day">Play again</button>
+    </div>
+  </div>
+
+  <script src="engine.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
