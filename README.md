@@ -6,9 +6,9 @@ An empty 3D world, waiting to become a game. **You** build it — with Claude Co
 
 Open `index.html` in a browser. No install, no build step.
 
-You get a sunlit field, a camera that follows you, and a little orange box you can walk around with **WASD**. Pressing **E** calls `interact()` — which currently does nothing. That's the whole point: everything from here is yours to invent.
+You get a sunlit meadow — wild grass, trees, rocks, bushes — a camera that follows you, and a little blue villager you walk around with **WASD**. Pressing **E** calls `interact()` — which currently does nothing. That's the whole point: everything from here is yours to invent.
 
-All the code lives in **`playground.js`** (~150 lines, read all of it). The 3D engine is [three.js](https://threejs.org) (`lib/three.min.js`, already included).
+All the code lives in **`playground.js`** — read all of it, it's commented for you. Every tree and rock is built from basic shapes in code (no downloaded art), so you can build anything the same way. The 3D engine is [three.js](https://threejs.org) (`lib/three.min.js`, already included).
 
 ## The plan
 
