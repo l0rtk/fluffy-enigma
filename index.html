@@ -3,49 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fluffy Acres</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>The Playground</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; overflow: hidden; background: #bfe0f5; font-family: system-ui, sans-serif; }
+    #app, #app canvas { position: fixed; inset: 0; display: block; }
+    .hint {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.45rem 0.9rem;
+      background: rgba(248, 250, 238, 0.92);
+      border: 1px solid #c9d2ac;
+      border-radius: 10px;
+      color: #6b7355;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .hint b { color: #2f331d; }
+  </style>
 </head>
 <body>
-  <header class="masthead">
-    <h1>Fluffy Acres</h1>
-    <p class="tagline">a farmer's daybook &middot; one season, thirty days</p>
-  </header>
+  <div id="app"></div>
+  <div class="hint"><b>WASD</b> walk &middot; <b>E</b> interact &middot; open <b>playground.js</b> and start building</div>
 
-  <main>
-    <section class="field-wrap">
-      <div class="report">
-        <div class="report-item">Day <b id="day" class="num">1</b> <span class="of">/ 30</span></div>
-        <div class="report-item" id="weather">☀️ Sunny</div>
-        <div class="report-item">🪙 <b id="gold" class="num">20</b>g</div>
-        <div class="report-item energy" id="energy" title="Energy — every action costs 1"></div>
-      </div>
-      <div id="board" class="board"></div>
-      <p class="field-note" id="field-note"></p>
-    </section>
-
-    <aside class="panel">
-      <h2>Tools</h2>
-      <div class="tools" id="tools"></div>
-      <h2>Seeds</h2>
-      <div class="seeds" id="seeds"></div>
-      <button id="end-day" class="end-day">🌙 End day</button>
-      <h2>Daybook</h2>
-      <ul id="log" class="log"></ul>
-      <button id="new-game" class="new-game">Start a new season</button>
-    </aside>
-  </main>
-
-  <div id="gameover" class="gameover hidden">
-    <div class="gameover-card">
-      <h2>The season is over</h2>
-      <p class="final">🪙 <b id="final-gold" class="num">0</b> gold</p>
-      <p class="final-note">Can you beat it next season?</p>
-      <button id="play-again" class="end-day">Play again</button>
-    </div>
-  </div>
-
-  <script src="engine.js"></script>
-  <script src="ui.js"></script>
+  <script src="lib/three.min.js"></script>
+  <script src="playground.js"></script>
 </body>
 </html>
