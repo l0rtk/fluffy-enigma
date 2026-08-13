@@ -20,11 +20,11 @@ Turn the meadow into a small ecosystem — **flowers** that grow, **bees** that 
 
 ### Quest map
 
-1. **🌸 Flowers.** They sprout at random spots, grow through stages (sprout → bud → bloom), and wilt after a while. The meadow breathes on its own — your first life from rules.
-2. **🐝 One bee.** Give it a hive (pick a tree) and a three-state brain: *find a bloom → drink nectar → carry it home*. Watch it work. Congratulations — you've built your first agent: it perceives, decides, and acts, on a loop.
-3. **🍯 The hive.** Bees deposit nectar; the hive slowly consumes it; enough surplus → a new bee is born; empty stores → a bee starves. Now the world has an economy.
-4. **🌼 Pollination.** A visited bloom seeds a new flower nearby. This closes the big loop: bees make flowers make nectar make bees. Then watch what happens — does it bloom forever, or boom and crash? That's *emergence*, and you built it.
-5. **🌦 Weather.** A simple cycle — ☀️ sun (normal), 🌧 rain (flowers grow fast, bees stay home, hive eats reserves), 💨 wind (bees drift off course). Write each weather as a few numbers the rules read (`flowerGrowth`, `beesCanFly`) — never `if raining` sprinkled through drawing code. Steal the rain particles from `finished-game/3d.js`.
+1. **🌦 Weather.** The world's foundation — it answers to no one, so it comes first. A simple cycle on a timer: ☀️ sun, 🌧 rain (sky darkens, rain falls — steal the particles from `finished-game/3d.js`), 💨 wind. Each weather is just a few numbers in the world's state (`flowerGrowth`, `beesCanFly`) that nothing reads *yet* — and that's fine. **Stop at three states and a few numbers**; don't polish weather forever, the meadow is waiting.
+2. **🌸 Flowers.** They sprout at random spots, grow through stages (sprout → bud → bloom), wilt after a while — and they read the weather: rain means `flowerGrowth` is high and the meadow explodes into bloom. Your first life from rules, already living in its climate.
+3. **🐝 One bee.** Give it a hive (pick a tree) and a three-state brain: *find a bloom → drink nectar → carry it home* — and it checks `beesCanFly` before leaving (rain grounds it, wind blows it off course). Congratulations — you've built your first agent: it perceives, decides, and acts, on a loop.
+4. **🍯 The hive.** Bees deposit nectar; the hive slowly consumes it; enough surplus → a new bee is born; empty stores → a bee starves. Now the world has an economy — and rainy days *cost* something, because grounded bees still eat.
+5. **🌼 Pollination.** A visited bloom seeds a new flower nearby. This closes the big loop: bees make flowers make nectar make bees. Then watch what happens — does it bloom forever, or boom and crash? That's *emergence*, and you built it.
 6. **📊 The dashboard.** Flower count, bee count, honey stores, and a tiny population graph over time. One glance = is the world healthy? (This later becomes the AI's report card — see phase 2.)
 
 **❄️ Boss fight:** winter. Several rain-and-cold days in a row where nothing grows. Can your ecosystem survive on the honey it stored?
