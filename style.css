@@ -1,0 +1,281 @@
+/* ── Fluffy Acres ── meadow-paper almanac look, no dependencies. */
+
+:root {
+  --paper: #edf3dc;
+  --card: #f8faee;
+  --ink: #2f331d;
+  --muted: #6b7355;
+  --line: #c9d2ac;
+  --grass: #c4d9a0;
+  --soil: #a0764f;
+  --soil-wet: #7c5a3c;
+  --sprout: #4f7d33;
+  --gold: #c79a18;
+  --rain: #4e86be;
+  --nope: #b5502f;
+  --ready-glow: #e8c84a;
+  --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 1.25rem 1rem 3rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.45;
+}
+
+.num { font-family: var(--mono); font-weight: 600; }
+
+/* Masthead — set like an almanac title plate. */
+.masthead {
+  max-width: 62rem;
+  margin: 0 auto 1.25rem;
+  text-align: center;
+  border-top: 3px double var(--ink);
+  border-bottom: 3px double var(--ink);
+  padding: 0.6rem 0 0.7rem;
+}
+.masthead h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tagline {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-style: italic;
+  font-family: var(--display);
+  font-size: 0.95rem;
+}
+
+main {
+  max-width: 62rem;
+  margin: 0 auto;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+/* ── The field ── */
+.field-wrap { flex: 1.4; min-width: 0; }
+
+.report {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.4rem;
+  padding: 0.55rem 0.9rem;
+  margin-bottom: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 1.02rem;
+}
+.report-item .of { color: var(--muted); font-size: 0.85em; }
+.report-item.energy { display: flex; gap: 5px; margin-left: auto; align-items: center; }
+.pip {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--sprout);
+  border: 1.5px solid var(--ink);
+}
+.pip.spent { background: transparent; opacity: 0.45; }
+
+/* Graph-paper field plan. */
+.board {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 7px;
+  padding: 12px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(79, 125, 51, 0.12) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(79, 125, 51, 0.12) 23px 24px),
+    var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.tile {
+  aspect-ratio: 1;
+  border: 1.5px solid rgba(47, 51, 29, 0.35);
+  border-radius: 8px;
+  background: var(--grass);
+  font-size: clamp(1.2rem, 3.6vw, 1.7rem);
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 80ms ease, box-shadow 80ms ease;
+  position: relative;
+}
+.tile:hover { transform: translateY(-1.5px); box-shadow: 0 3px 6px rgba(47, 51, 29, 0.18); }
+.tile.tilled {
+  background: var(--soil);
+  background-image: repeating-linear-gradient(0deg, transparent 0 6px, rgba(0, 0, 0, 0.08) 6px 8px);
+}
+.tile.tilled.watered { background-color: var(--soil-wet); }
+.tile.watered::after {
+  content: "💧";
+  position: absolute;
+  top: 2px; right: 3px;
+  font-size: 0.55em;
+}
+.tile.ready {
+  box-shadow: 0 0 0 2.5px var(--ready-glow), 0 0 10px 1px var(--ready-glow);
+}
+.field-note {
+  margin: 0.5rem 0.2rem 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+/* ── Panel ── */
+.panel { flex: 1; min-width: 15.5rem; }
+.panel h2 {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.25rem;
+  margin: 1.1rem 0 0.5rem;
+}
+.panel h2:first-child { margin-top: 0; }
+
+.tools { display: flex; gap: 0.5rem; }
+.tool {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0.5rem 0.25rem;
+  font-family: var(--body);
+  font-size: 0.85rem;
+  background: var(--card);
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tool-emoji { font-size: 1.25rem; }
+
+.seeds { display: flex; flex-direction: column; gap: 0.45rem; }
+.seed {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.6rem;
+  align-items: center;
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+  background: var(--card);
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--body);
+}
+.seed-emoji { grid-row: 1 / 3; font-size: 1.5rem; }
+.seed-name { font-weight: 600; font-size: 0.92rem; }
+.seed-econ { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+.seed:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.tool.selected, .seed.selected {
+  border-color: var(--sprout);
+  box-shadow: 0 0 0 2px var(--sprout);
+  background: #eef4df;
+}
+
+.end-day {
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.65rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-family: var(--body);
+  color: var(--paper);
+  background: var(--ink);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.end-day:hover:not(:disabled) { background: #454a2c; }
+.end-day:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  max-height: 13rem;
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+.log li { padding: 0.12rem 0; border-bottom: 1px dotted var(--line); }
+.log li:last-child { border-bottom: none; }
+.log li.nope { color: var(--nope); }
+
+.new-game {
+  margin-top: 0.7rem;
+  width: 100%;
+  padding: 0.4rem;
+  background: none;
+  border: 1.5px dashed var(--line);
+  border-radius: 10px;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.new-game:hover { color: var(--ink); border-color: var(--muted); }
+
+/* ── Season's end ── */
+.gameover {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 51, 29, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.gameover.hidden { display: none; }
+.gameover-card {
+  background: var(--paper);
+  border: 3px double var(--ink);
+  border-radius: 14px;
+  padding: 1.6rem 2.2rem;
+  text-align: center;
+  max-width: 22rem;
+}
+.gameover-card h2 { font-family: var(--display); margin: 0 0 0.4rem; }
+.final { font-size: 2rem; margin: 0.2rem 0; }
+.final-note { color: var(--muted); margin: 0 0 1rem; }
+
+button:focus-visible, .tile:focus-visible {
+  outline: 2.5px solid var(--rain);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  main { flex-direction: column; }
+  .panel { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
