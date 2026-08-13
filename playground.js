@@ -101,34 +101,6 @@ function jitterColor(hex, amount) {
   return c;
 }
 
-function tree(x, z) {
-  const g = new THREE.Group();
-  const h = 0.9 + rand() * 0.6;
-  const trunk = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.09, 0.15, h, 7),
-    new THREE.MeshStandardMaterial({ color: jitterColor(0x6b4f32, 0.06), roughness: 1 })
-  );
-  trunk.position.y = h / 2;
-  trunk.castShadow = true;
-  g.add(trunk);
-  // A crown of leafy blobs, like AoE forests.
-  const blobs = 3 + (rand() * 3 | 0);
-  for (let i = 0; i < blobs; i++) {
-    const leaf = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.4 + rand() * 0.35, 1),
-      new THREE.MeshStandardMaterial({ color: jitterColor(0x3f6b2f, 0.12), roughness: 1 })
-    );
-    leaf.position.set((rand() - 0.5) * 0.7, h + 0.3 + rand() * 0.6, (rand() - 0.5) * 0.7);
-    leaf.castShadow = true;
-    g.add(leaf);
-  }
-  g.position.set(x, 0, z);
-  g.rotation.y = rand() * Math.PI * 2;
-  const s = 0.85 + rand() * 0.5;
-  g.scale.setScalar(s);
-  scene.add(g);
-}
-
 function rock(x, z) {
   const m = new THREE.Mesh(
     new THREE.IcosahedronGeometry(0.2 + rand() * 0.35, 0),
@@ -166,9 +138,63 @@ function scatter(count, minRadius, place) {
     placed++;
   }
 }
-scatter(26, 6, tree);
 scatter(12, 4, rock);
 scatter(14, 4, bush);
+
+// ── Trees: real 3D models (Quaternius' Stylized Nature pack, CC0) ──
+// Each .gltf file in assets/trees/ is a hand-made model. We load the
+// five kinds once, then plant copies all over the meadow.
+const loader = new THREE.GLTFLoader();
+const TREE_KINDS = ["MapleTree_1", "MapleTree_2", "MapleTree_3", "BirchTree_1", "BirchTree_2"];
+
+function loadTree(name) {
+  return new Promise((resolve) =>
+    loader.load(`assets/trees/${name}.gltf`, (gltf) => {
+      const model = gltf.scene;
+      model.traverse((part) => { if (part.isMesh) part.castShadow = true; });
+      // Trees come in random sizes — measure, so we can plant them at ours.
+      const height = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3()).y;
+      model.userData.baseScale = 2.8 / height;
+      resolve(model);
+    })
+  );
+}
+
+// The maples come autumn-red, but the pack includes a black & white
+// leaf texture made for tinting — so most maples get summer greens.
+const leafMask = new THREE.TextureLoader().load("assets/trees/MapleTree_Leaves_BW.png");
+leafMask.flipY = false; // gltf textures are stored flipped vs. three.js
+leafMask.encoding = THREE.sRGBEncoding;
+
+Promise.all(TREE_KINDS.map(loadTree)).then((models) => {
+  // Three shades of summer green, borrowed from the maple leaf material.
+  let greens = [];
+  models[0].traverse((part) => {
+    if (part.isMesh && part.material.name === "MapleTree_Leaves" && !greens.length) {
+      greens = [0x4d7c2c, 0x5d8f35, 0x446f28].map((color) => {
+        const m = part.material.clone();
+        m.map = leafMask;
+        m.color.set(color);
+        return m;
+      });
+    }
+  });
+
+  scatter(26, 6, (x, z) => {
+    const t = models[(rand() * models.length) | 0].clone();
+    // 7 of 10 maples turn green; the rest keep their autumn reds.
+    if (rand() < 0.7) {
+      const green = greens[(rand() * greens.length) | 0];
+      t.traverse((part) => {
+        if (part.isMesh && part.material.name === "MapleTree_Leaves") part.material = green;
+      });
+    }
+    t.scale.setScalar(t.userData.baseScale * (0.75 + rand() * 0.6));
+    t.position.set(x, 0, z);
+    t.rotation.y = rand() * Math.PI * 2;
+    scene.add(t);
+  });
+});
 
 // Wild grass tufts: hundreds of tiny cones, drawn in one batch.
 function tufts(count, color) {

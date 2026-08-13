@@ -4,11 +4,15 @@ An empty 3D world, waiting to become a game. **You** build it — with Claude Co
 
 ## Start
 
-Open `index.html` in a browser. No install, no build step.
+```sh
+./serve.sh        # then open http://localhost:8000
+```
+
+(Any static server works — the page needs one because browsers won't let a double-clicked file load the 3D tree models from disk.)
 
 You get a sunlit meadow — wild grass, trees, rocks, bushes — a camera that follows you, and a little blue villager you walk around with **WASD**. Pressing **E** calls `interact()` — which currently does nothing. That's the whole point: everything from here is yours to invent.
 
-All the code lives in **`playground.js`** — read all of it, it's commented for you. Every tree and rock is built from basic shapes in code (no downloaded art), so you can build anything the same way. The 3D engine is [three.js](https://threejs.org) (`lib/three.min.js`, already included).
+All the code lives in **`playground.js`** — read all of it, it's commented for you. The rocks and bushes are built from basic shapes in code; the trees are real 3D models from [Quaternius](https://quaternius.com)' Stylized Nature pack (CC0, free for anything) in `assets/trees/` — grab more models from there or [Kenney](https://kenney.nl) whenever your game needs them. The 3D engine is [three.js](https://threejs.org) (`lib/three.min.js`, already included).
 
 ## The plan
 
