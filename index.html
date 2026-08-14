@@ -23,11 +23,44 @@
       white-space: nowrap;
     }
     .hint b { color: #2f331d; }
+
+    /* The world's vital signs, top left. */
+    #hud {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      padding: 0.45rem 0.8rem;
+      background: rgba(248, 250, 238, 0.92);
+      border: 1px solid #c9d2ac;
+      border-radius: 10px;
+      color: #2f331d;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums; /* digits stop jittering as they change */
+    }
+
+    /* A message that appears when you do something, then gets out of the way. */
+    #toast {
+      position: fixed;
+      top: 56px;
+      left: 14px;
+      padding: 0.4rem 0.8rem;
+      background: rgba(47, 51, 29, 0.88);
+      border-radius: 10px;
+      color: #f6f8ec;
+      font-size: 0.85rem;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
   <div id="app"></div>
-  <div class="hint"><b>WASD</b> walk &middot; <b>E</b> interact &middot; open <b>playground.js</b> and start building</div>
+  <div id="hud">&hellip;</div>
+  <div id="toast"></div>
+  <div class="hint"><b>WASD</b> walk &middot; <b>E</b> plant / inspect flower / ask the hive &middot; <b>scroll</b> zoom &middot; <b>R</b> reroll &middot; <b>F</b> stamp &middot; seed <b id="seed">&hellip;</b></div>
 
   <script src="lib/three.min.js"></script>
   <script src="lib/GLTFLoader.js"></script>
